@@ -51,5 +51,19 @@ router.put("/:id", (req, res) => {
 
 // DELETE
 // delete an account
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+
+  db("accounts")
+    .where("id", "=", id)
+    .del()
+    .then(deletedAccount => {
+      res.status(202).json(deletedAccount);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ errorMessage: "Could not delete your resource" });
+    });
+});
 
 module.exports = router;
