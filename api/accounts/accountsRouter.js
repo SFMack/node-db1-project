@@ -31,4 +31,25 @@ router.get("/", (req, res) => {
     });
 });
 
+// UPDATE
+// change an accounts values
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const updates = req.body;
+
+  db("accounts")
+    .where("id", "=", id)
+    .update(updates)
+    .then(updatedAccount => {
+      res.status(202).json(updatedAccount);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ errorMessage: "Could not update your resource" });
+    });
+});
+
+// DELETE
+// delete an account
+
 module.exports = router;
